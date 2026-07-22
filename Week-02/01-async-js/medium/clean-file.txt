@@ -1,0 +1,2 @@
+The previous string was --> hello     world    my    name   is       raman 
+The new clean string is --> hello world my name is raman
