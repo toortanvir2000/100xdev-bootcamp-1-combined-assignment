@@ -17,6 +17,34 @@
   - `npm run test-calculator`
 */
 
-class Calculator { }
+class Calculator {
+  constructor() {
+    this.res = 0;
+  }
+  add = function (num) {
+    this.res += num;
+  };
+  subtract = function (num) {
+    this.res -= num;
+  };
+  multiply = function (num) {
+    this.res *= num;
+  };
+  divide = function (num) {
+    if (num === 0) throw new Error("Denominator can't be 0");
+    this.res /= num;
+  };
+  clear = function () {
+    this.res = 0;
+  };
+  getResult = function () {
+    return this.res;
+  };
+  calculate = function (str) {
+    const ans = eval(str);
+    if (Math.abs(ans) === Infinity) throw new Error("Incorrect input");
+    else this.res = ans;
+  };
+}
 
 module.exports = Calculator;
