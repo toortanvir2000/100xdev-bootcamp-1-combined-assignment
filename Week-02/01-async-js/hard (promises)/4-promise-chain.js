@@ -6,19 +6,30 @@
  */
 
 function wait1(t) {
-
+    let target = Date.now() + (t*1000);
+    while (Date.now() < target) {}
+    return Promise.resolve();
 }
 
 function wait2(t) {
-
+    let target = Date.now() + (t*1000);
+    while (Date.now() < target) {}
+    return Promise.resolve();
 }
 
 function wait3(t) {
-
+    let target = Date.now() + (t*1000);
+    while (Date.now() < target) {}
+    return Promise.resolve();
 }
 
 function calculateTime(t1, t2, t3) {
-
+    const startTime = Date.now();
+    return Promise.all([wait1(t1), wait2(t2), wait3(t3)])
+    .then(() => {
+        const endTime = Date.now();
+        return endTime - startTime;
+    })
 }
 
 module.exports = calculateTime;
