@@ -5,3 +5,9 @@
 // Try to do an expensive operation below the file read and see how it affects the output. 
 // Make the expensive operation more and more expensive and see how it affects the output. 
 
+const fs = require("node:fs");
+fs.readFile("Week-02/01-async-js/easy/test-file.txt", "utf-8", (err, data) => {
+    if (err) console.error(err);
+    else console.log(data);
+});
+

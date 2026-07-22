@@ -2,3 +2,7 @@
 
 // Using the fs library again, try to write to the contents of a file.
 // You can use the fs library to as a black box, the goal is to understand async tasks.
+
+const fs = require("node:fs");
+
+fs.appendFileSync("Week-02/01-async-js/easy/test-file.txt", "Hello there!");
