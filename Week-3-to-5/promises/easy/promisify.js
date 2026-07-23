@@ -1,4 +1,3 @@
-
 // // Problem Description – Promisify Utility
 // //
 // // You are given a legacy function that uses Node.js callback style:
@@ -11,7 +10,16 @@
 // // 2. Reject if callback gets an error
 
 function promisify(fn) {
-
+  return (...args) =>
+    new Promise((resolve, reject) => {
+      fn.apply(this, [
+        ...args,
+        (err, sol) => {
+          if (err) reject(err);
+          resolve(sol);
+        },
+      ]);
+    });
 }
 
 module.exports = promisify;
