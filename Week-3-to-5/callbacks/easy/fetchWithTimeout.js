@@ -8,9 +8,13 @@
 // If the operation exceeds the time limit, the callback is invoked with an Error
 // whose message is "Request Timed Out".
 
-
 function fetchWithTimeout(url, ms, callback) {
-
+  Promise.race([
+    new Promise((_, rej) =>
+      setTimeout(() => callback("Request Timed Out"), ms),
+    ),
+    fetch(url, callback),
+  ]);
 }
 
 module.exports = fetchWithTimeout;

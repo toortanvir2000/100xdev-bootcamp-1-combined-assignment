@@ -12,7 +12,20 @@
 
 
 class AsyncEventEmitter {
-  constructor() { }
+  constructor() {
+    this.events = {};
+  }
+  on = function (event, listener) {
+    if (!this.events[event]) this.events[event] = [];
+    this.events[event].push(listener);
+  }
+  emit = function (event, data) {
+    if (!this.events[event]) return Promise.resolve([]);
+    const promises = this.events[event].map(async (listener) => {
+      return await listener(data);
+    });
+    return Promise.allSettled(promises);
+  }
 }
 
 module.exports = AsyncEventEmitter;
