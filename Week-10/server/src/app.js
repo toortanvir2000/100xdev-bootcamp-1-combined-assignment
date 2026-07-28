@@ -1,4 +1,5 @@
 import express from "express";
+import errorHandler from "./middlewares/error.middleware.js";
 
 const app = express();
 app.use(express.json());
@@ -14,5 +15,7 @@ app.use("/api/auth", authenticationRouter);
 app.use("/api/households", householdRouter);
 app.use("/api/items", itemsRouter);
 app.use("/api/dashboard", dashboardRouter);
+
+app.use(errorHandler);
 
 export default app;

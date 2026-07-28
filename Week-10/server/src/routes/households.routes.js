@@ -4,7 +4,7 @@ import {
   createHousehold,
   joinHousehold,
   yourHousehold,
-} from "../controllers/households.controller";
+} from "../controllers/households.controller.js";
 
 const router = Router();
 
