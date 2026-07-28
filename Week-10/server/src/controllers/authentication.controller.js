@@ -20,7 +20,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
       Number.parseInt(SALT, 10),
     );
 
-    await User.create({
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
@@ -37,9 +37,15 @@ const registerUser = asyncHandler(async (req, res, next) => {
       JWT_SECRET_KEY,
     );
 
+    res.cookie("auth-token", token, {
+      maxAge: 60 * 60 * 1000,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: true,
+    });
     res.status(200).json({
       message: "Successful",
-      token,
+      userId: user["_id"]
     });
   } catch (e) {
     if (e?.["errorResponse"]?.["code"] === 11000) {
@@ -52,9 +58,19 @@ const registerUser = asyncHandler(async (req, res, next) => {
 });
 
 const loginUser = asyncHandler(async (req, res, next) => {
-  res.status(200).json({
-    message: "ok login",
-  });
+  const { email, password } = req.body;
+  const userData = await User.findOne({ email });
+  const validateLogin = await bcrypt.compare(password, userData["password"]);
+  if (validateLogin) {
+    res.status(200).json({
+      message: "successful",
+      userId: userData["_id"],
+    });
+  } else {
+    res.status(401).json({
+      message: "invalid username or password",
+    });
+  }
 });
 
 export { registerUser, loginUser };

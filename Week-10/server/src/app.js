@@ -1,8 +1,12 @@
 import express from "express";
+import cookieParser from "cookie-parser";
+import authHandler from "./middlewares/auth.middleware.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
+app.use(authHandler);
 
 // routes
 import authenticationRouter from "./routes/authentication.routes.js";
